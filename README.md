@@ -61,63 +61,6 @@ public class Player : MonoBehaviour
    
 }
 
-//Generaotr.cs
-using UnityEngine;
-
-public class Generator : MonoBehaviour
-{
-    float timer = 1;
-    public GameObject[] gm;
-    
-    void Start()
-    {
-        if (gm.Length == 0)
-        {
-            Debug.LogError("No prefabs assigned to the gm array!");
-        }
-    }
-
-    void Update()
-    {
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            int chance = Random.Range(1, 101);
-            float pos_x = Random.Range(-4.0f, 4.0f);
-
-            if (chance <= 20)
-            {
-                GameObject obj = Instantiate(gm[1], new Vector3(pos_x, 6.0f, 0.1f), Quaternion.identity);
-                SetUpFallingObject(obj);
-            }
-            else
-            {
-                GameObject obj = Instantiate(gm[0], new Vector3(pos_x, 6.0f, 0.1f), Quaternion.identity);
-                SetUpFallingObject(obj);
-            }
-            timer = 0.7f;
-        }
-    }
-    private void SetUpFallingObject(GameObject obj)
-    {
-        if (obj.GetComponent<Rigidbody2D>() == null)
-        {
-            Rigidbody2D rb = obj.AddComponent<Rigidbody2D>();
-            rb.gravityScale = 1; 
-        }
-
-        SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.sortingLayerName = "Default"; 
-            spriteRenderer.sortingOrder = 0; 
-        }
-    }
-}
-
 //Music.cs
 using UnityEngine;
 
