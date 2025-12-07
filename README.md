@@ -210,3 +210,32 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
+//FallingBombs.cs
+using UnityEngine;
+
+public class FallingBomb : MonoBehaviour
+{
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(this.gameObject);
+    }
+}
+
+//BombFallController.cs
+using UnityEngine;
+
+public class NewMonoBehaviourScript : MonoBehaviour
+{
+    float wait = 0.4f;
+    public GameObject fallingBomb;
+    void Start()
+    {
+        InvokeRepeating("Fall", wait, wait);
+    }
+
+    void Fall()
+    {
+        Instantiate(fallingBomb, new Vector3(Random.Range(-10,10), 10, 0), Quaternion.identity);
+    }
+}
