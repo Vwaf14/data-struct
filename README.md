@@ -161,10 +161,14 @@ public class GameController : MonoBehaviour
     [SerializeField] private Player player;
     public Canvas GameOverCanvas;
     public TMP_Text TimerText;
-    
+
+    // ✔ Added Data Structure: Array to store the last 5 time scores
+    private float[] timeScores = new float[5];
+    private int scoreIndex = 0;
+
     private void Awake()
     {
-        if(player != null)
+        if (player != null)
         {
             player.PlayerDied += WhenPlayerDies;
         }
@@ -178,9 +182,24 @@ public class GameController : MonoBehaviour
     void WhenPlayerDies()
     {
         GameOverCanvas.gameObject.SetActive(true);
-        TimerText.text = "You Lasted: " + Math.Round(Time.timeSinceLevelLoad, 2);
 
-        if(player != null)
+        float finalTime = (float)Math.Round(Time.timeSinceLevelLoad, 2);
+        TimerText.text = "You Lasted: " + finalTime;
+
+        // ✔ Store score in the array, wrap around after length
+        timeScores[scoreIndex] = finalTime;
+        scoreIndex++;
+        if (scoreIndex >= timeScores.Length)
+            scoreIndex = 0;
+
+        // ✔ Optional: Print time scores for testing
+        Debug.Log("=== Time Score History ===");
+        for (int i = 0; i < timeScores.Length; i++)
+        {
+            Debug.Log("Score[" + i + "] = " + timeScores[i]);
+        }
+
+        if (player != null)
         {
             player.PlayerDied -= WhenPlayerDies;
         }
@@ -191,4 +210,3 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
-
