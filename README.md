@@ -149,4 +149,46 @@ public class mainmenu : MonoBehaviour
         Application.Quit();
     }
 }
-Write to Whendy Fabro
+
+//GameController.cs
+using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameController : MonoBehaviour
+{
+    [SerializeField] private Player player;
+    public Canvas GameOverCanvas;
+    public TMP_Text TimerText;
+    
+    private void Awake()
+    {
+        if(player != null)
+        {
+            player.PlayerDied += WhenPlayerDies;
+        }
+
+        if (GameOverCanvas.gameObject.activeSelf)
+        {
+            GameOverCanvas.gameObject.SetActive(false);
+        }
+    }
+
+    void WhenPlayerDies()
+    {
+        GameOverCanvas.gameObject.SetActive(true);
+        TimerText.text = "You Lasted: " + Math.Round(Time.timeSinceLevelLoad, 2);
+
+        if(player != null)
+        {
+            player.PlayerDied -= WhenPlayerDies;
+        }
+    }
+
+    public void RetryClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+}
+
