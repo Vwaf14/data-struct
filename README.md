@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     }
    
 }
+
 //Generaotr.cs
 using UnityEngine;
 
@@ -117,3 +118,35 @@ public class Generator : MonoBehaviour
     }
 }
 
+//Music.cs
+using UnityEngine;
+
+public class music : MonoBehaviour
+{
+    [SerializeField] AudioSource musicScource;
+
+    [Header("--------------------------")]
+    public AudioClip background;
+
+    private void Start()
+    {
+        musicScource.clip = background;
+        musicScource.Play();
+    }
+}
+
+//mainmenu.cs
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class mainmenu : MonoBehaviour
+{
+   public void PlayerGame()
+    {
+        SceneManager.LoadSceneAsync("GameScene");
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+}
+Write to Whendy Fabro
